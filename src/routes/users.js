@@ -10,7 +10,6 @@ router.use(auth, adminOnly);
 router.get('/', usersController.getAll);
 router.post('/', usersController.create);
 router.patch('/:id', usersController.update);
-router.patch('/:id/role', usersController.updateRole);
-router.delete('/:id', usersController.delete);
+router.delete('/:id', usersController.remove);
 
 module.exports = router;
