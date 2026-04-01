@@ -1,12 +1,15 @@
+const connectDB = require('../db');
 const Hero = require('../models/Hero');
 
 exports.get = async (req, res) => {
   try {
+    await connectDB();
     let hero = await Hero.findOne();
     if (!hero) {
-      hero = await Hero.create({ slides: [] });
+      hero = new Hero({ slides: [] });
+      await hero.save();
     }
-    res.json(hero.slides.filter(s => s.isActive).sort((a, b) => a.order - b.order));
+    res.json(hero);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -14,17 +17,16 @@ exports.get = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const { slides } = req.body;
+    await connectDB();
     let hero = await Hero.findOne();
     if (!hero) {
-      hero = new Hero({ slides });
+      hero = new Hero(req.body);
     } else {
-      hero.slides = slides;
+      hero.slides = req.body.slides || hero.slides;
     }
-    hero.updatedAt = new Date();
     await hero.save();
     res.json(hero);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(400).json({ error: err.message });
   }
 };

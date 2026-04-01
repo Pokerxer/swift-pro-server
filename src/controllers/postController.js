@@ -1,7 +1,9 @@
+const connectDB = require('../db');
 const Model = require('../models/Post');
 
 exports.getAll = async (req, res) => {
   try {
+    await connectDB();
     const query = req.query.published === 'true' ? { published: true } : {};
     const items = await Model.find(query).sort({ publishedAt: -1, createdAt: -1 });
     res.json(items);
@@ -12,6 +14,7 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
+    await connectDB();
     const item = await Model.findById(req.params.id);
     if (!item) return res.status(404).json({ error: 'Not found' });
     res.json(item);
@@ -22,6 +25,7 @@ exports.getOne = async (req, res) => {
 
 exports.getBySlug = async (req, res) => {
   try {
+    await connectDB();
     const item = await Model.findOne({ slug: req.params.slug });
     if (!item) return res.status(404).json({ error: 'Not found' });
     res.json(item);
@@ -32,6 +36,7 @@ exports.getBySlug = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
+    await connectDB();
     const item = new Model(req.body);
     await item.save();
     res.status(201).json(item);
@@ -42,6 +47,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
+    await connectDB();
     const item = await Model.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!item) return res.status(404).json({ error: 'Not found' });
     res.json(item);
@@ -52,6 +58,7 @@ exports.update = async (req, res) => {
 
 exports.remove = async (req, res) => {
   try {
+    await connectDB();
     const item = await Model.findByIdAndDelete(req.params.id);
     if (!item) return res.status(404).json({ error: 'Not found' });
     res.json({ message: 'Deleted successfully' });

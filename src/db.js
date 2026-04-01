@@ -1,0 +1,26 @@
+const mongoose = require('mongoose');
+
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/swiftpro';
+
+let isConnected = false;
+
+async function connectDB() {
+  if (isConnected) {
+    return mongoose.connection;
+  }
+
+  try {
+    await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
+    isConnected = true;
+    console.log('MongoDB connected');
+    return mongoose.connection;
+  } catch (error) {
+    console.error('MongoDB connection error:', error.message);
+    throw error;
+  }
+}
+
+module.exports = connectDB;
