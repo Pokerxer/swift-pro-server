@@ -8,7 +8,7 @@ exports.register = async (req, res) => {
   try {
     await connectDB();
     const { username, email, password, role } = req.body;
-    const existing = await User.findOne({ : [{ email }, { username }] });
+    const existing = await User.findOne({ $or: [{ email }, { username }] });
     if (existing) return res.status(400).json({ error: 'User already exists' });
     
     const user = new User({ username, email, password, role });
