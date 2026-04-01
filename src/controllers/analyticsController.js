@@ -8,7 +8,7 @@ exports.getOverview = async (req, res) => {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - days);
     
-    const analytics = await Analytics.find({ date: { : startDate } });
+    const analytics = await Analytics.find({ date: { $gte: startDate } });
     
     const overview = {
       views: analytics.reduce((sum, a) => sum + (a.views || 0), 0),
