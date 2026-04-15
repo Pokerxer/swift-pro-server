@@ -13,6 +13,7 @@ const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
 const heroRoutes = require('./routes/hero');
 const analyticsRoutes = require('./routes/analytics');
+const partnersRoutes = require('./routes/partners');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/hero', heroRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/partners', partnersRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
