@@ -7,6 +7,7 @@ exports.getAll = async (req, res) => {
     const items = await Partner.find().sort({ order: 1, createdAt: 1 });
     res.json(items);
   } catch (err) {
+    console.error('Partner getAll error:', err.message);
     res.status(500).json({ error: err.message });
   }
 };
@@ -17,6 +18,7 @@ exports.getActive = async (req, res) => {
     const items = await Partner.find({ isActive: true }).sort({ order: 1, createdAt: 1 });
     res.json(items);
   } catch (err) {
+    console.error('Partner getActive error:', err.message);
     res.status(500).json({ error: err.message });
   }
 };
@@ -28,6 +30,7 @@ exports.getOne = async (req, res) => {
     if (!item) return res.status(404).json({ error: 'Not found' });
     res.json(item);
   } catch (err) {
+    console.error('Partner getOne error:', err.message);
     res.status(500).json({ error: err.message });
   }
 };
@@ -39,6 +42,7 @@ exports.create = async (req, res) => {
     await item.save();
     res.status(201).json(item);
   } catch (err) {
+    console.error('Partner create error:', err.message);
     res.status(400).json({ error: err.message });
   }
 };
@@ -50,6 +54,7 @@ exports.update = async (req, res) => {
     if (!item) return res.status(404).json({ error: 'Not found' });
     res.json(item);
   } catch (err) {
+    console.error('Partner update error:', err.message);
     res.status(400).json({ error: err.message });
   }
 };
@@ -61,6 +66,7 @@ exports.remove = async (req, res) => {
     if (!item) return res.status(404).json({ error: 'Not found' });
     res.json({ message: 'Deleted successfully' });
   } catch (err) {
+    console.error('Partner remove error:', err.message);
     res.status(500).json({ error: err.message });
   }
 };

@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const connectDB = require('./db');
 
 const servicesRoutes = require('./routes/services');
 const projectsRoutes = require('./routes/projects');
@@ -36,9 +37,22 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Root route for testing
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'SwiftPro Backend API' });
 });
 
-module.exports = app;
+const PORT = process.env.PORT || 5002;
+
+async function startServer() {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error.message);
+    process.exit(1);
+  }
+}
+
+startServer();
