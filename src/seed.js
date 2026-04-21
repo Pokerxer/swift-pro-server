@@ -38,12 +38,12 @@ const Partner = mongoose.model('Partner', partnerSchema);
 const Service = mongoose.model('Service', serviceSchema);
 
 const defaultPartners = [
-  { name: 'First Bank', color: '#FF6900', order: 1 },
-  { name: 'GTBank', color: '#1D3E7E', order: 2 },
-  { name: 'Zenith Bank', color: '#E31E24', order: 3 },
-  { name: 'Nigerian Navy', color: '#1A365D', order: 4 },
-  { name: 'Nigerian Army', color: '#22543D', order: 5 },
-  { name: 'NCC', color: '#2D3748', order: 6 },
+  { name: 'Finance', color: '#1D3E7E', order: 1 },
+  { name: 'Healthcare', color: '#22543D', order: 2 },
+  { name: 'Government', color: '#1A365D', order: 3 },
+  { name: 'Telecoms', color: '#2D3748', order: 4 },
+  { name: 'Retail', color: '#B45309', order: 5 },
+  { name: 'Logistics', color: '#6D28D9', order: 6 },
 ];
 
 const defaultServices = [

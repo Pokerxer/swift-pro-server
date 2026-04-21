@@ -4,8 +4,17 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/swiftp
 
 let isConnected = false;
 
+mongoose.connection.on('disconnected', () => {
+  isConnected = false;
+  console.warn('MongoDB disconnected — will reconnect on next request');
+});
+
+mongoose.connection.on('error', () => {
+  isConnected = false;
+});
+
 async function connectDB() {
-  if (isConnected) {
+  if (isConnected && mongoose.connection.readyState === 1) {
     return mongoose.connection;
   }
 
@@ -18,6 +27,7 @@ async function connectDB() {
     console.log('MongoDB connected');
     return mongoose.connection;
   } catch (error) {
+    isConnected = false;
     console.error('MongoDB connection error:', error.message);
     throw error;
   }

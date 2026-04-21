@@ -1,4 +1,2 @@
-
-> swiftpro-backend@1.0.0 start
-> node src/index.js
-
+MongoDB connected
+Server running on port 5002
